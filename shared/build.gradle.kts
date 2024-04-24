@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.skie)
 }
 
 kotlin {
@@ -11,7 +14,8 @@ kotlin {
             }
         }
     }
-    
+
+    val xcf = XCFramework()
     listOf(
         iosX64(),
         iosArm64(),
@@ -20,12 +24,14 @@ kotlin {
         it.binaries.framework {
             baseName = "shared"
             isStatic = true
+            xcf.add(this)
         }
     }
 
     sourceSets {
         commonMain.dependencies {
             //put your multiplatform dependencies here
+            implementation(libs.kotlinx.coroutines.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

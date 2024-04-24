@@ -15,7 +15,7 @@ let package = Package(
         .library(name: "FeaturePackage", targets: ["FeaturePackage"]),
     ],
     dependencies: [
-        .package(path: "../CorePackage"),
+        .package(path: "../CorePackage")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
