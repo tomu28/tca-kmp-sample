@@ -30,11 +30,14 @@ public struct AppView: View {
 
 @Reducer
 public struct AppStore {
-    public init() {}
+    private let sampleClass: SampleClass
+    public init() {
+        self.sampleClass = SampleClass()
+    }
 
     @ObservableState
     public struct State {
-        var step: SampleStep = .step1
+        var step: SampleClass.SampleStep = .step1
 
         public init() {}
     }
@@ -44,7 +47,7 @@ public struct AppStore {
         case getFlowState
         case nextStep
         case backStep
-        case updateStep(step: SampleStep)
+        case updateStep(step: SampleClass.SampleStep)
     }
 
     public var body: some ReducerOf<Self> {
@@ -57,15 +60,15 @@ public struct AppStore {
             return .send(.getFlowState)
         case .getFlowState:
             return .run { send in
-                for await value in getCurrentStep() {
+                for await value in sampleClass.currentStep {
                     await send(.updateStep(step: value))
                 }
             }
         case .nextStep:
-            nextStep()
+            sampleClass.nextStep()
             return .none
         case .backStep:
-            backStep()
+            sampleClass.backStep()
             return .none
         case let .updateStep(step: step):
             state.step = step

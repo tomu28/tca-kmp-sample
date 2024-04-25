@@ -1,6 +1,5 @@
 import AppFeature
 import ComposableArchitecture
-import FeaturePackage
 import SwiftUI
 
 @main
